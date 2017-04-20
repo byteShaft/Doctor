@@ -55,7 +55,7 @@ public class Appointments extends Fragment implements
     private Adapter arrayAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBaseView = inflater.inflate(R.layout.appointments, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(getResources().getString(R.string.appointments));
@@ -132,8 +132,14 @@ public class Appointments extends Fragment implements
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(
-                        getActivity().getApplicationContext(), DoctorsAppointment.class));
+                Agenda agenda = agendaArrayList.get(i);
+                Intent intent = new Intent(getActivity(), DoctorsAppointment.class);
+                intent.putExtra("reason", agenda.getReaseon());
+                intent.putExtra("first_name", agenda.getFirstName());
+                intent.putExtra("last_name", agenda.getLastName());
+                intent.putExtra("age", agenda.getDateOfBirth());
+                intent.putExtra("date", agenda.getDate());
+                startActivity(intent);
             }
         });
         return mBaseView;
